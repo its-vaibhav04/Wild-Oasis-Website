@@ -45,3 +45,5 @@ eslint.config.mjs
 jsconfig.json
 
 README.md 
+
+.env.local

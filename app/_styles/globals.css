@@ -31,7 +31,7 @@
   --color-accent-950: #382814;
 }
 
-/* @layer components {
+@layer components {
   .spinner {
     margin: 3.2rem auto 1.6rem;
     width: 60px;
@@ -64,4 +64,4 @@
   --rdp-accent-color: theme("colors.accent.500") !important;
   --rdp-background-color: theme("colors.accent.600") !important;
   margin: 0 !important;
-} */
+}

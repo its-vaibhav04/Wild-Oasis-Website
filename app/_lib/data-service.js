@@ -54,8 +54,6 @@ export async function getGuest(email) {
     .select("*")
     .eq("email", email)
     .single();
-
-  // No error here! We handle the possibility of no guest in the sign in callback
   return data;
 }
 
@@ -78,13 +76,12 @@ export async function getBookings(guestId) {
   const { data, error, count } = await supabase
     .from("Bookings")
     .select(
-      "id, created_at, startDate, endDate, numNights, numGuests, totalPrice, guestId, cabinId, cabins(name, image)"
+      "id, created_at, startDate, endDate, numNights, numGuests, totalPrice, guestId, cabinId, Cabins(name, image)"
     )
     .eq("guestId", guestId)
     .order("startDate");
 
   if (error) {
-    console.error(error);
     throw new Error("Bookings could not get loaded");
   }
 
@@ -170,35 +167,35 @@ export async function createBooking(newBooking) {
   return data;
 }
 
-export async function updateGuest(id, updatedFields) {
-  const { data, error } = await supabase
-    .from("Guests")
-    .update(updatedFields)
-    .eq("id", id)
-    .select()
-    .single();
+// export async function updateGuest(id, updatedFields) {
+//   const { data, error } = await supabase
+//     .from("Guests")
+//     .update(updatedFields)
+//     .eq("id", id)
+//     .select()
+//     .single();
 
-  if (error) {
-    console.error(error);
-    throw new Error("Guest could not be updated");
-  }
-  return data;
-}
+//   if (error) {
+//     console.error(error);
+//     throw new Error("Guest could not be updated");
+//   }
+//   return data;
+// }
 
-export async function updateBooking(id, updatedFields) {
-  const { data, error } = await supabase
-    .from("Bookings")
-    .update(updatedFields)
-    .eq("id", id)
-    .select()
-    .single();
+// export async function updateBooking(id, updatedFields) {
+//   const { data, error } = await supabase
+//     .from("Bookings")
+//     .update(updatedFields)
+//     .eq("id", id)
+//     .select()
+//     .single();
 
-  if (error) {
-    console.error(error);
-    throw new Error("Booking could not be updated");
-  }
-  return data;
-}
+//   if (error) {
+//     console.error(error);
+//     throw new Error("Booking could not be updated");
+//   }
+//   return data;
+// }
 
 export async function deleteBooking(id) {
   const { data, error } = await supabase.from("Bookings").delete().eq("id", id);

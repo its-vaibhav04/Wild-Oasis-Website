@@ -92,20 +92,16 @@ export async function getBookedDatesByCabinId(cabinId) {
   let today = new Date();
   today.setUTCHours(0, 0, 0, 0);
   today = today.toISOString();
-
-  // Getting all bookings
   const { data, error } = await supabase
     .from("Bookings")
     .select("*")
     .eq("cabinId", cabinId)
-    .or(`startDate.gte.${today},status.eq.checked-in`);
+    .or(`startDate.gte.${today}, status.eq.checked-in`);
 
   if (error) {
     console.error(error);
     throw new Error("Bookings could not get loaded");
   }
-
-  // Converting to actual dates to be displayed in the date picker
   const bookedDates = data
     .map((booking) => {
       return eachDayOfInterval({
@@ -114,7 +110,6 @@ export async function getBookedDatesByCabinId(cabinId) {
       });
     })
     .flat();
-
   return bookedDates;
 }
 
@@ -152,20 +147,20 @@ export async function createGuest(newGuest) {
   return data;
 }
 
-export async function createBooking(newBooking) {
-  const { data, error } = await supabase
-    .from("Bookings")
-    .insert([newBooking])
-    .select()
-    .single();
+// export async function createBooking(newBooking) {
+//   const { data, error } = await supabase
+//     .from("Bookings")
+//     .insert([newBooking])
+//     .select()
+//     .single();
 
-  if (error) {
-    console.error(error);
-    throw new Error("Booking could not be created");
-  }
+//   if (error) {
+//     console.error(error);
+//     throw new Error("Booking could not be created");
+//   }
 
-  return data;
-}
+//   return data;
+// }
 
 // export async function updateGuest(id, updatedFields) {
 //   const { data, error } = await supabase
